@@ -1,0 +1,21 @@
+{% extends 'exam/base.html' %}
+
+{% block title %}User Quotes{% endblock %}
+
+{% block body_block %}
+
+<div class="row"></div>
+    <div class='col Absolute-Center is-Responsive'>
+        <h2>{{ name }}'s Quotes</h2>
+
+        {% for i in uploaded %}
+            <div class="card card-container shadow-lg p-3 mb-5 bg-white rounded">
+                <p id="profile-name" class="profile-name-card"></p>
+                <h3>{{ i.author }}</h3>
+                <p>"{{ i.quote }}"</p>
+            </div>            
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

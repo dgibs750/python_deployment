@@ -1,0 +1,37 @@
+{% extends 'exam/base.html' %}
+
+{% block title %}Edit Account{% endblock %}
+
+{% block body_block %}
+    <div class='container'>
+        <div class='row'>
+            <div class='col'>
+                <div class="card card-container shadow-lg p-3 mb-5 bg-white rounded">
+                    <p id="profile-name" class="profile-name-card"></p>
+                    <form class="form-signin" action="/update/" method="POST">
+                        {% csrf_token %}
+                        <span id="reauth-name" class="reauth-name"></span>
+                        <h2>Edit My Account</h2>
+                        <input type="text" name="first_name" class="form-control" value="{{request.session.first_name}}" required autofocus>
+                        <input type="text" name="last_name" class="form-control" value="{{request.session.last_name}}" required autofocus>
+                        <input type="email" name="email" class="form-control" value="{{request.session.email}}" required autofocus>
+                        <div class="wrapper">
+                            <span class="group-btn  col-lg-6">
+                                <input type='hidden' name='next' value='{{ request.path }}'>
+                                <input type='hidden' name='uid' value='{{ request.session.uid }}'>
+                                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Update</button>
+                            </span>
+                        </div>   
+                    </form>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class='text-danger'{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>                
+            </div>
+        </div>
+    </div>
+{% endblock %}

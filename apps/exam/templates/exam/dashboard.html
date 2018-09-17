@@ -1,0 +1,53 @@
+{% extends 'exam/base.html' %}
+
+{% block title %}Quote Dashboard{% endblock %}
+
+{% block body_block %}
+    <div class='row'>
+        <div class='col'>
+            <h1>Welcome, {{ request.session.first_name }}!</h1>
+            {% for i in quotes reversed %}
+            <div class="card card-container shadow-lg p-3 mb-5 bg-white rounded">
+                <p id="profile-name" class="profile-name-card"></p>
+                <h3>{{ i.author }}</h3>
+                <p>"{{ i.quote }}"</p>
+                <p>Posted by <a href='/user/{{ i.uploaded_by.id }}/'>{{ i.uploaded_by.first_name }} {{ i.uploaded_by.last_name }}</a></p>
+                <p>{{ i.liked_by.count }} people like this</p>
+                <div class="wrapper">
+                    <span class="group-btn  col-lg-6">     
+                            <a class="btn btn-lg btn-primary btn-block btn-signin" href='/like/{{ i.id }}/' role="button">Like</a>
+                        {% if i.uploaded_by.id == request.session.uid %}
+                            <a class="btn btn-lg btn-primary btn-block btn-signin" href='/delete/{{ i.id }}/' role="button">Delete</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>            
+            {% endfor %}
+        </div>
+        <div class='col'>
+            <h1>Add a Quote!</h1>
+            <div class="card card-container shadow-lg p-3 mb-5 bg-white rounded">
+                <p id="profile-name" class="profile-name-card"></p>
+                <form class="form-signin" action="/addQuote/" method="POST">
+                    {% csrf_token %}
+                    <span id="reauth-destination" class="reauth-name"></span>
+                    <input type="text" name="author" class="form-control" placeholder="Author" required autofocus>
+                    <textarea class="form-control" name='quote' placeholder='Quote' rows="3"></textarea>
+                    <div class="wrapper">
+                        <span class="group-btn  col-lg-6">     
+                            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Add Quote</button>
+                        </span>
+                    </div>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class='text-danger'{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

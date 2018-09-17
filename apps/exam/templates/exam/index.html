@@ -1,0 +1,36 @@
+{% extends 'exam/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body_block %}
+{% load static %}
+<div class="container Absolute-Center is-Responsive mt-5">
+    <div class="card card-container shadow-lg p-3 mb-5 bg-white rounded">
+        <img id="profile-img" class="profile-img-card" src="{% static 'exam/img/space-cowboy.png' %}" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" action="/login/" method="POST">
+            {% csrf_token %}
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <div id="remember" class="checkbox">
+                <a href="register_form/" class="forgot-password">
+                    Click here to register!
+                </a>
+            </div>
+            <div class="wrapper">
+                <span class="group-btn  col-lg-6">     
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">login</button>
+                </span>
+            </div>
+        </form>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class='text-danger'{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}    
+    </div>
+</div>
+{% endblock %}

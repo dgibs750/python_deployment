@@ -1,0 +1,40 @@
+{% extends 'exam/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body_block %}
+{% load static %}
+<div class="container Absolute-Center is-Responsive mt-5">
+    <div class="card card-container shadow-lg p-3 mb-5 bg-white rounded">
+        <img id="profile-img" class="profile-img-card" src="{% static 'exam/img/space-cowboy.png' %}" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" action="/add_user/" method="POST">
+            {% csrf_token %}
+            <span id="reauth-name" class="reauth-name"></span>
+            <input type="text" name="first_name" class="form-control" placeholder="First Name" required autofocus>
+            <input type="text" name="last_name" class="form-control" placeholder="Last Name" required autofocus>
+            <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <p class="text-info">*Password should be at least 8 characters</p>
+            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+            <div class="wrapper">
+                <span class="group-btn  col-lg-6">     
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
+                </span>
+            </div>
+            <div id="remember" class="checkbox">
+                <a href="/" class="forgot-password">
+                    Go back to login!
+                </a>
+            </div>
+        </form>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class='text-danger'{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
